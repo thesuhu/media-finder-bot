@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 client = AsyncIOMotorClient(DATABASE_URI)
 database = client[DATABASE_NAME]
 instance = Instance.from_db(database)
-
+print(instance)
 @instance.register
 class Media(Document):
     file_id = fields.StrField(attribute='_id')
@@ -28,10 +28,11 @@ class Media(Document):
 
     class Meta:
         indexes = ('$file_name', )
-        collection_name = COLLECTION_NAME
+        collection_name = 'telegram_files'
 
 
 async def save_file(media):
+    print(media)
     """Save file in database"""
 
     file_id, file_ref = unpack_new_file_id(media.file_id)
