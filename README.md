@@ -19,6 +19,7 @@ pip3 install -r requirements.txt
 python3 bot.py
 ```
 
-Or deploy directly to heroku by clicking the button below:
+Or deploy directly to Railway <i>(since November 2022 Heroku is no longer free, so the installation template is moved to Railway)</i> by clicking the button below:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+<!-- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) -->
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/dUjXPr?referralCode=lriTrC)

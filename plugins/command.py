@@ -71,6 +71,32 @@ async def log_file(bot, message):
     except Exception as e:
         await message.reply(str(e))
 
+# @Client.on_message(filters.command('delete') & filters.user(ADMINS))
+# async def delete(bot, message):
+#     """Delete file from database"""
+#     reply = message.reply_to_message
+#     if not (reply and reply.media):
+#         await message.reply('Reply to file with /delete which you want to delete', quote=True)
+#         return
+
+#     msg = await message.reply("Processing...⏳", quote=True)
+
+#     for file_type in ("document", "video", "audio"):
+#         media = getattr(reply, file_type, None)
+#         if media is not None:
+#             break
+#     else:
+#         await msg.edit('This is not supported file format')
+#         return
+
+#     file_id = unpack_new_file_id(media.file_id)[0]
+#     result = await Media.collection.delete_one({'file_id': file_id})
+
+#     if result.deleted_count:
+#         await msg.edit('File is successfully deleted from database')
+#     else:
+#         await msg.edit('File not found in database')
+
 @Client.on_message(filters.command('delete') & filters.user(ADMINS))
 async def delete(bot, message):
     """Delete file from database"""
@@ -89,8 +115,12 @@ async def delete(bot, message):
         await msg.edit('This is not supported file format')
         return
 
-    file_id = unpack_new_file_id(media.file_id)[0]
-    result = await Media.collection.delete_one({'file_id': file_id})
+    result = await Media.collection.delete_one({
+        'file_name': media.file_name,
+        'file_size': media.file_size,
+        'file_type': media.file_type,
+        'mime_type': media.mime_type
+    })
 
     if result.deleted_count:
         await msg.edit('File is successfully deleted from database')
