@@ -19,8 +19,13 @@
             "description": "Your bot token.",
             "value": ""
         },
-        "USER_SESSION": {
-            "description": "User bot string session.",
+        "SESSION": {
+            "description": "Bot string session. (e.g. Media_search)",
+            "value": "",
+            "required": false
+        },
+        "USERBOT_STRING_SESSION": {
+            "description": "User bot string session. (e.g. Userbot_Bot)",
             "value": "",
             "required": false
         },
