@@ -54,7 +54,7 @@ async def answer(bot, query):
         switch_pm_text = f"{emoji.FILE_FOLDER} Results"
         if text:
             switch_pm_text += f" for {text}"
-
+        
         await query.answer(
             results=results,
             cache_time=cache_time,
@@ -80,11 +80,11 @@ async def answer(bot, query):
 def get_reply_markup(username, query):
     url = 't.me/share/url?url=' + \
         quote(SHARE_BUTTON_TEXT.format(username=username))
+    link = 'https://t.me/+rJbb91gUZnY3ZDY1'
     buttons = [
         [
-            InlineKeyboardButton(
-                'Search again', switch_inline_query_current_chat=query),
-            InlineKeyboardButton('Share bot', url=url),
+            InlineKeyboardButton('Channel', url=link),
+            InlineKeyboardButton('Share File', url=url),
         ]
     ]
     return InlineKeyboardMarkup(buttons)
