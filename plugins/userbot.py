@@ -1,3 +1,7 @@
+# important:
+# this will work only if there is valid user session
+# bot session will error, bcoz bot can't get chat history
+
 import logging
 import asyncio
 
@@ -23,16 +27,14 @@ async def index_files(bot, message):
     else:
         msg = await message.reply('Processing...⏳')
         raw_data = message.command[1:]
-        # user_bot = Client('User-bot', API_ID, API_HASH, session_string=USERBOT_STRING_SESSION)
         user_bot = Client(USERBOT_STRING_SESSION, API_ID, API_HASH, bot_token=BOT_TOKEN)
         chats = [int(chat) if id_pattern.search(chat) else chat for chat in raw_data]
         total_files = 0
-
+        
         async with lock:
             try:
                 async with user_bot:
                     for chat in chats:
-
                         async for user_message in user_bot.get_chat_history(chat):
                             try:
                                 message = await bot.get_messages(chat, user_message.id, replies=0)
@@ -46,6 +48,7 @@ async def index_files(bot, message):
                                     break
                             else:
                                 continue
+
                             media.file_type = file_type
                             media.caption = message.caption
                             await save_file(media)

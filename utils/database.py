@@ -7,7 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
 
 from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER
-from .helpers import unpack_new_file_id
+# from .helpers import unpack_new_file_id
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -18,8 +18,16 @@ instance = Instance.from_db(database)
 print(instance)
 @instance.register
 class Media(Document):
-    file_id = fields.StrField(attribute='_id')
-    file_ref = fields.StrField(allow_none=True)
+    # file_id = fields.StrField(attribute='_id')
+    # file_ref = fields.StrField(allow_none=True)
+    # file_name = fields.StrField(required=True)
+    # file_size = fields.IntField(required=True)
+    # file_type = fields.StrField(allow_none=True)
+    # mime_type = fields.StrField(allow_none=True)
+    # caption = fields.StrField(allow_none=True)
+
+    file_unique_id = fields.StrField(attribute='_id', required=True)
+    file_id = fields.StrField(required=True)
     file_name = fields.StrField(required=True)
     file_size = fields.IntField(required=True)
     file_type = fields.StrField(allow_none=True)
@@ -28,25 +36,36 @@ class Media(Document):
 
     class Meta:
         indexes = ('$file_name', )
-        collection_name = 'telegram_files'
+        # collection_name = 'telegram_files'
+        collection_name = COLLECTION_NAME
 
 
 async def save_file(media):
     print(media)
     """Save file in database"""
 
-    file_id, file_ref = unpack_new_file_id(media.file_id)
+    # file_id, file_ref = unpack_new_file_id(media.file_id)
 
     try:
+        # file = Media(
+        #     file_id=file_id,
+        #     file_ref=file_ref,
+        #     file_name=media.file_name,
+        #     file_size=media.file_size,
+        #     file_type=media.file_type,
+        #     mime_type=media.mime_type,
+        #     caption=media.caption.html if media.caption else None,
+        # )
+
         file = Media(
-            file_id=file_id,
-            file_ref=file_ref,
+            file_id=media.file_id,
+            file_unique_id=media.file_unique_id,
             file_name=media.file_name,
             file_size=media.file_size,
             file_type=media.file_type,
             mime_type=media.mime_type,
             caption=media.caption.html if media.caption else None,
-        )
+        )        
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
     else:

@@ -1,4 +1,5 @@
 import logging
+from unittest import result
 from urllib.parse import quote
 
 from pyrogram import Client, emoji, filters
@@ -10,6 +11,7 @@ from info import CACHE_TIME, SHARE_BUTTON_TEXT, AUTH_USERS, AUTH_CHANNEL
 
 logger = logging.getLogger(__name__)
 cache_time = 0 if AUTH_USERS or AUTH_CHANNEL else CACHE_TIME
+
 
 @Client.on_inline_query(filters.user(AUTH_USERS) if AUTH_USERS else None)
 async def answer(bot, query):
@@ -60,6 +62,7 @@ async def answer(bot, query):
             switch_pm_parameter="start",
             next_offset=str(next_offset)
         )
+
     else:
 
         switch_pm_text = f'{emoji.CROSS_MARK} No results'
@@ -73,6 +76,7 @@ async def answer(bot, query):
             switch_pm_parameter="okay",
         )
 
+
 def get_reply_markup(username, query):
     url = 't.me/share/url?url=' + \
         quote(SHARE_BUTTON_TEXT.format(username=username))
@@ -85,6 +89,7 @@ def get_reply_markup(username, query):
     ]
     return InlineKeyboardMarkup(buttons)
 
+
 def size_formatter(size):
     """Get size in readable format"""
 
@@ -95,6 +100,7 @@ def size_formatter(size):
         i += 1
         size /= 1024.0
     return "%.2f %s" % (size, units[i])
+
 
 async def is_subscribed(bot, query):
     try:

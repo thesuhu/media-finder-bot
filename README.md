@@ -16,10 +16,12 @@ source env/bin/activate # For Linux or MacOS
 pip3 install -r requirements.txt
 
 # Edit info.py with variables as given below then run bot
-python3 bot.py
+python3 app.py
 ```
+
+<!-- Or deploy directly to Heroku by clicking the button below:
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) -->
 
 Or deploy directly to Railway <i>(since November 2022 Heroku is no longer free, so the installation template is moved to Railway)</i> by clicking the button below:
 
-<!-- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) -->
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/dUjXPr?referralCode=lriTrC)
