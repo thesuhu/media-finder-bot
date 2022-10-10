@@ -37,8 +37,10 @@ async def answer(bot, query):
 
     offset = int(query.offset or 0)
     reply_markup = get_reply_markup(bot.username, query=text)
-    files, next_offset = await get_search_results(text, file_type=file_type, max_results=10, offset=offset)
+    # files, next_offset = await get_search_results(text, file_type=file_type, max_results=10, offset=offset)
+    files, next_offset = await get_search_results(text, file_type='document', max_results=10, offset=offset)
     
+    # print(files)
     for file in files:
         results.append(
             InlineQueryResultCachedDocument(
@@ -50,6 +52,7 @@ async def answer(bot, query):
             )
         )
 
+    # print(results)
     if results:
         switch_pm_text = f"{emoji.FILE_FOLDER} Results"
         if text:
